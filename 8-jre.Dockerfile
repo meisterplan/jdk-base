@@ -16,6 +16,7 @@ ENV JMX_CONFIG="-Dcom.sun.management.jmxremote=true \
     -Dcom.sun.management.jmxremote.port=5005 \
     -Dcom.sun.management.jmxremote.rmi.port=5005 \
     -Djava.rmi.server.hostname=127.0.0.1"
+ENV JAVA_OPTS ""
 
 # By default 320mb non heap memory is reserved.
 ENV JAVA_NON_HEAP_MEMORY_BYTES       320000000
