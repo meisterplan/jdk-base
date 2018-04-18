@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
+FROM openjdk:8-jdk
 
 ENV SERVICE_JAR            /service.jar
 ENV SERVER_PORT            8080
