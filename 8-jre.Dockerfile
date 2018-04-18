@@ -1,5 +1,7 @@
 FROM openjdk:8-jre
 
+EXPOSE 8080 8081 5005
+
 ENV SERVICE_JAR            /service.jar
 ENV SERVER_PORT            8080
 # Spring Boot 1.x specific
