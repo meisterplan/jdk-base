@@ -1,10 +1,19 @@
 #!/bin/bash
 
-CGROUPS_MEM_LIMIT=$(cat /sys/fs/cgroup/memory/memory.limit_in_bytes)
+CGROUPS_MEM_LIMIT_BYTES=$(cat /sys/fs/cgroup/memory/memory.limit_in_bytes)
 
-JAVA_XMX=$((($CGROUPS_MEM_LIMIT-$JAVA_NON_HEAP_MEMORY_BYTES)/1024/1024))m
+if [[ "$CGROUPS_MEM_LIMIT_BYTES" == "9223372036854771712" || "X${CGROUPS_MEM_LIMIT_BYTES}X" == "XX" ]]; then
+    echo "There is no cgroups memory limit in place, falling back to default JVM Xmx behavior (not setting any Xmx)."
+    JAVA_XMX=""
+else
+    NON_HEAP_MEMORY_MB=$(($JAVA_NON_HEAP_MEMORY_BYTES/1024/1024))
+    CGROUPS_MEM_LIMIT_MB=$(($CGROUPS_MEM_LIMIT_BYTES/1024/1024))
+    XMX_LIMIT_MB=$(($CGROUPS_MEM_LIMIT_MB-$NON_HEAP_MEMORY_MB))
+    echo "Container has a $CGROUPS_MEM_LIMIT_MB mb memory limit, $NON_HEAP_MEMORY_MB mb is reserved for non heap, using Xmx=${XMX_LIMIT_MB}m."
+    JAVA_XMX=-Xmx${XMX_LIMIT_MB}m
+fi
 
-OPTS="-Xmx$JAVA_XMX \
+OPTS="$JAVA_XMX \
 -XX:MaxMetaspaceSize=$JAVA_MAX_METASPACE_SIZE \
 -Xss$JAVA_STACK_SIZE \
 -XX:ReservedCodeCacheSize=$JAVA_RESERVED_CODE_CACHE_SIZE \
