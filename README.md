@@ -8,6 +8,7 @@ We have currently pre-built images for openjdk in version 8.
 
 * [`meisterplan/openjdk-springboot:8-jre`](https://hub.docker.com/r/meisterplan/openjdk-springboot/tags/)
 * [`meisterplan/openjdk-springboot:8-jdk`](https://hub.docker.com/r/meisterplan/openjdk-springboot/tags/)
+* [`meisterplan/openjdk-springboot:10-jdk`](https://hub.docker.com/r/meisterplan/openjdk-springboot/tags/)
 
 By default the JRE enviroment should be enough. In some corner cases the application may need a fully fledged JDK, then use the `-jdk` images.
 
