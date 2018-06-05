@@ -19,6 +19,7 @@ OPTS="$JAVA_XMX \
 -XX:ReservedCodeCacheSize=$JAVA_RESERVED_CODE_CACHE_SIZE \
 -XX:CompressedClassSpaceSize=$JAVA_COMPRESSED_CLASS_SPACE_SIZE \
 -XX:MaxDirectMemorySize=$JAVA_MAX_DIRECT_MEMORY_SIZE \
+-XX:+ExitOnOutOfMemoryError \
 $JMX_CONFIG \
 $JAVA_OPTS"
 
