@@ -26,6 +26,8 @@ ENV JAVA_RESERVED_CODE_CACHE_SIZE    16m
 ENV JAVA_COMPRESSED_CLASS_SPACE_SIZE 16m
 ENV JAVA_MAX_DIRECT_MEMORY_SIZE      16m
 
+RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod u+x /usr/bin/check
+
 ADD "run.sh" "/run.sh"
 
 CMD ["./run.sh"]
