@@ -1,8 +1,9 @@
-FROM openjdk:10-jdk
+FROM adoptopenjdk/openjdk10:latest
 
 EXPOSE 8080 8081 5005
 
 ENV SERVICE_JAR            /service.jar
+ENV SERVICE_FOLDER         /service
 ENV SERVER_PORT            8080
 # Spring Boot 1.x specific
 ENV MANAGEMENT_PORT        8081
@@ -26,13 +27,13 @@ ENV JAVA_RESERVED_CODE_CACHE_SIZE    16m
 ENV JAVA_COMPRESSED_CLASS_SPACE_SIZE 16m
 ENV JAVA_MAX_DIRECT_MEMORY_SIZE      16m
 
+RUN apt-get update && apt-get install -y wget && apt-get clean
+
 RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod u+x /usr/bin/check
 
 ENV LIVENESS_CHECK "curl -m 1 -sf localhost:8081/actuator"
 ENV READINESS_CHECK "curl -m 1 -sf localhost:8081/actuator/health"
 
-ADD "run-exploded.sh" "/run-exploded.sh"
-ONBUILD ADD service.jar /service.jar
-ONBUILD RUN unzip -q service.jar -d service && rm service.jar
+ADD "run.sh" "/run.sh"
 
-CMD ["./run-exploded.sh"]
+CMD ["./run.sh"]

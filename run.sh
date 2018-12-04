@@ -25,4 +25,30 @@ $JAVA_OPTS"
 
 echo "Java launch options: $OPTS"
 
-exec java $OPTS -jar $SERVICE_JAR
+red="$(tput setaf 1)"
+yellow="$(tput setaf 3)"
+reset="$(tput sgr0)"
+bold="$(tput bold)"
+
+function warn() {
+    echo
+    echo "${yellow}********************************************************************************${reset}"
+    echo
+    echo -en "  $1"
+    echo
+    echo
+    echo "${yellow}********************************************************************************${reset}"    
+}
+
+function error() {
+	echo
+    echo "${red}${bold}ERROR: ${reset}$1"    
+}
+
+if [ -f "$SERVICE_JAR" ]; then
+	exec java $OPTS -jar $SERVICE_JAR
+elif [ -d "$SERVICE_FOLDER" ]; then
+	exec java $OPTS -cp $SERVICE_FOLDER org.springframework.boot.loader.JarLauncher
+else
+	error "Cannot start: Must supply either $SERVICE_JAR or $SERVICE_FOLDER"
+fi

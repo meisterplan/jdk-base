@@ -4,21 +4,20 @@ These images provide a preconfigured base image for Docker. It allows simplified
 
 ## Available images
 
-We have currently pre-built images for openjdk in version 8.
+We have currently pre-built images for openjdk in version 8, 10 and 11 based on AdoptOpenJDK.
 
-* [`meisterplan/openjdk-springboot:8-jre`](https://hub.docker.com/r/meisterplan/openjdk-springboot/tags/)
 * [`meisterplan/openjdk-springboot:8-jdk`](https://hub.docker.com/r/meisterplan/openjdk-springboot/tags/)
 * [`meisterplan/openjdk-springboot:10-jdk`](https://hub.docker.com/r/meisterplan/openjdk-springboot/tags/)
-
-By default the JRE enviroment should be enough. In some corner cases the application may need a fully fledged JDK, then use the `-jdk` images.
+* [`meisterplan/openjdk-springboot:11-jdk`](https://hub.docker.com/r/meisterplan/openjdk-springboot/tags/)
 
 ## Supported features
 
-This image has some advantages to a simple `openjdk:8-jre` as a base image.
+This image has some advantages to a simple `(adopt)openjdk` as a base image.
 
 ### Preconfigured launch
 
-The Docker image will automatically launch a spring boot application located under `/service.jar`.
+The Docker image will automatically launch a spring boot application which can either be deployed as a fat JAR or an uncompressed folder with class files (aka exploded JAR).
+The starting mechanism will be automatically configured depending on whether `/service.jar` or a folder named `/service` is present.
 
 ### Enabled JMX port
 
