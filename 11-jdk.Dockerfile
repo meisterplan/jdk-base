@@ -27,7 +27,7 @@ ENV JAVA_RESERVED_CODE_CACHE_SIZE    16m
 ENV JAVA_COMPRESSED_CLASS_SPACE_SIZE 16m
 ENV JAVA_MAX_DIRECT_MEMORY_SIZE      16m
 
-RUN apt-get update && apt-get install -y wget && apt-get clean
+RUN apt-get update && apt-get install -y wget unzip && apt-get clean
 
 RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod u+x /usr/bin/check
 
