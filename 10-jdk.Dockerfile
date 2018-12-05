@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk10:latest
+FROM openjdk:10-jdk
 
 EXPOSE 8080 8081 5005
 
