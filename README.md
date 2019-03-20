@@ -8,10 +8,10 @@ This repository supersedes the earlier [docker-openjdk-springboot Image](https:/
  
 We have currently pre-built images for AdoptOpenJDK in version 8 and 11 as well as OpenJDK 11.
 
-* [`meisterplan/openjdk-springboot:8`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
-* [`meisterplan/openjdk-springboot:11`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
-* [`meisterplan/openjdk-springboot:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
-* [`meisterplan/openjdk-springboot:11-openjdk`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
+* [`meisterplan/jdk-base:8`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
+* [`meisterplan/jdk-base:11`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
+* [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
+* [`meisterplan/jdk-base:11-openjdk`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
 
 ## Using the image
 
