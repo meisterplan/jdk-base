@@ -1,16 +1,16 @@
-# No header since Ubuntu needs /bin/bash, but Alpine does /bin/sh
+#!/bin/sh
 
-function fp_calc {
+fp_calc() {
     awk "BEGIN{print $*}";
 }
 
-function fp_calc_to_int {
+fp_calc_to_int() {
     fp_calc "$*" | xargs printf %.0f
 }
 
 CGROUPS_MEM_LIMIT_BYTES=$(cat /sys/fs/cgroup/memory/memory.limit_in_bytes)
 
-if [[ "$CGROUPS_MEM_LIMIT_BYTES" == "9223372036854771712" || "X${CGROUPS_MEM_LIMIT_BYTES}X" == "XX" ]]; then
+if [ "$CGROUPS_MEM_LIMIT_BYTES" = "9223372036854771712" ] || [ "X${CGROUPS_MEM_LIMIT_BYTES}X" = "XX" ]; then
     echo "There is no cgroups memory limit in place, falling back to default behavior (not setting any limit)."
     JAVA_XMX=""
 
