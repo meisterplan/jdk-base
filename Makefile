@@ -1,8 +1,14 @@
-build-8-jdk:
-	docker build -t meisterplan/openjdk-springboot:8-jdk -f 8-jdk.Dockerfile .
+build:
+	echo "These images are usually built by DockerHub, run a specific target, if you must"
 
-build-10-jdk:
-	docker build -t meisterplan/openjdk-springboot:10-jdk -f 10-jdk.Dockerfile .
+build-8:
+	docker build -t meisterplan/jdk-base:8 -f 8.Dockerfile .
 
-build-11-jdk:
-	docker build -t meisterplan/openjdk-springboot:11-jdk -f 11-jdk.Dockerfile .
+build-11:
+	docker build -t meisterplan/jdk-base:11 -f 11.Dockerfile .
+
+build-11-alpine:
+	docker build -t meisterplan/jdk-base:11-alpine -f 11-alpine.Dockerfile .
+
+build-11-openjdk:
+	docker build -t meisterplan/jdk-base:11-openjdk -f 11-openjdk.Dockerfile .
