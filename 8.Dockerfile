@@ -33,7 +33,9 @@ ENV JVM_MEM_METASPACE_SIZE		""
 ENV JVM_MEM_HEAP_SIZE			""
 
 RUN apt-get update && apt-get install -y wget unzip && apt-get clean
-RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod u+x /usr/bin/check
+RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod ugo+x /usr/bin/check
+
+RUN groupadd -r -g 202 jdkservice && useradd -r -l -u 202 -g jdkservice jdkservice
 
 ENV LIVENESS_CHECK "curl -m 1 -sf localhost:8081/actuator"
 ENV READINESS_CHECK "curl -m 1 -sf localhost:8081/actuator/health"

@@ -50,9 +50,9 @@ $JVM_OPTS"
 echo "Complete JVM launch options: $OPTS"
 
 if [ -f "$SERVICE_JAR" ]; then
-	exec java $OPTS -jar $SERVICE_JAR
+    sudo -u jdkservice -H sh -c "exec java $OPTS -jar $SERVICE_JAR"
 elif [ -d "$SERVICE_FOLDER" ]; then
-	exec java $OPTS -cp $SERVICE_FOLDER org.springframework.boot.loader.JarLauncher
+	sudo -u jdkservice -H sh -c "exec java $OPTS -cp $SERVICE_FOLDER org.springframework.boot.loader.JarLauncher"
 else
 	echo "ERROR: Cannot start: Must supply either $SERVICE_JAR or $SERVICE_FOLDER"
 fi
