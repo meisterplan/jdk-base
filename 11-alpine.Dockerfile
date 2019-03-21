@@ -32,6 +32,8 @@ ENV JVM_MEM_METASPACE_SIZE		""
 # computed by default
 ENV JVM_MEM_HEAP_SIZE			""
 
+RUN apk add --no-cache su-exec
+ENV SU_BINARY su-exec
 RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod ugo+x /usr/bin/check
 
 RUN addgroup -S jdkservice -g 202 && adduser -S -u 202 jdkservice jdkservice
