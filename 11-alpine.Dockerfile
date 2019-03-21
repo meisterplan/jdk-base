@@ -32,7 +32,9 @@ ENV JVM_MEM_METASPACE_SIZE		""
 # computed by default
 ENV JVM_MEM_HEAP_SIZE			""
 
-RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod u+x /usr/bin/check
+RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod ugo+x /usr/bin/check
+
+RUN addgroup -S jdkservice -g 202 && adduser -S -u 202 jdkservice jdkservice
 
 ENV LIVENESS_CHECK "curl -m 1 -sf localhost:8081/actuator"
 ENV READINESS_CHECK "curl -m 1 -sf localhost:8081/actuator/health"
