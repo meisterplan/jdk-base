@@ -32,7 +32,8 @@ ENV JVM_MEM_METASPACE_SIZE		""
 # computed by default
 ENV JVM_MEM_HEAP_SIZE			""
 
-RUN apt-get update && apt-get install -y wget unzip && apt-get clean
+RUN apt-get update && apt-get install -y wget unzip gosu && apt-get clean
+ENV SU_BINARY gosu
 RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod ugo+x /usr/bin/check
 
 RUN groupadd -r -g 202 jdkservice && useradd -r -l -u 202 -g jdkservice jdkservice

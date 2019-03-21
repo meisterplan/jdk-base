@@ -42,7 +42,7 @@ else
 -XX:ReservedCodeCacheSize=${JVM_MEM_RESERVED_CODE_CACHE}m \
 -XX:MaxDirectMemorySize=${JVM_MEM_DIRECT_MEMORY}m"
 fi
-OPTS="$CALCULATED_OPTS
+OPTS="$CALCULATED_OPTS \
 -XX:+ExitOnOutOfMemoryError \
 $JMX_CONFIG \
 $JVM_OPTS"
@@ -50,9 +50,9 @@ $JVM_OPTS"
 echo "Complete JVM launch options: $OPTS"
 
 if [ -f "$SERVICE_JAR" ]; then
-    sudo -u jdkservice -H sh -c "exec java $OPTS -jar $SERVICE_JAR"
+    $SU_BINARY jdkservice sh -c "exec java $OPTS -jar $SERVICE_JAR"
 elif [ -d "$SERVICE_FOLDER" ]; then
-	sudo -u jdkservice -H sh -c "exec java $OPTS -cp $SERVICE_FOLDER org.springframework.boot.loader.JarLauncher"
+	$SU_BINARY jdkservice sh -c "exec java $OPTS -cp $SERVICE_FOLDER org.springframework.boot.loader.JarLauncher"
 else
 	echo "ERROR: Cannot start: Must supply either $SERVICE_JAR or $SERVICE_FOLDER"
 fi
