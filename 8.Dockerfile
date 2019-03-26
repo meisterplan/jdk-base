@@ -44,3 +44,8 @@ ENV READINESS_CHECK "curl -m 1 -sf localhost:8081/actuator/health"
 ADD "run.sh" "/run.sh"
 
 CMD ["./run.sh"]
+
+# Fix for https://github.com/AdoptOpenJDK/openjdk-docker/issues/111
+RUN apt-get install -y locales && apt-get clean
+RUN locale-gen en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
