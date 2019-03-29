@@ -16,31 +16,31 @@ if [ "$CGROUPS_MEM_LIMIT_BYTES" = "9223372036854771712" ] || [ "X${CGROUPS_MEM_L
 
     CALCULATED_OPTS=""
 else
-    CGROUPS_MEM_LIMIT_MB=$(( $CGROUPS_MEM_LIMIT_BYTES / 1048576 ))
-    echo "Container is started with $CGROUPS_MEM_LIMIT_MB MiB total memory"
+    CGROUPS_MEM_LIMIT_MIB=$(( $CGROUPS_MEM_LIMIT_BYTES / 1048576 ))
+    echo "Container is started with $CGROUPS_MEM_LIMIT_MIB MiB total memory"
 
-    if [ -z "$JVM_MEM_METASPACE_SIZE" ]; then
-        JVM_MEM_METASPACE_SIZE=$(( 1 + ($JVM_MEM_LOADED_CLASSES_COUNT * 5800 + 14000000) / 1048576 ))
-        echo "MaxMetaspaceSize computed to be $JVM_MEM_METASPACE_SIZE MiB"
+    if [ -z "$JVM_MEM_METASPACE_SIZE_MIB" ]; then
+        JVM_MEM_METASPACE_SIZE_MIB=$(( 1 + ($JVM_MEM_LOADED_CLASSES_COUNT * 5800 + 14000000) / 1048576 ))
+        echo "MaxMetaspaceSize computed to be $JVM_MEM_METASPACE_SIZE_MIB MiB"
     fi
 
-    if [ -z "$JVM_MEM_HEAP_SIZE" ]; then
-        PURE_JVM_MEMORY_MB=$( fp_calc_to_int "$CGROUPS_MEM_LIMIT_MB * (1 - ($JVM_MEM_OVERHEAD_PERCENT / 100))" )
-        TOTAL_STACK_SIZE_MB=$(( $JVM_MEM_STACK_SIZE * JVM_MEM_THREAD_COUNT / 1024 ))
-        JVM_MEM_HEAP_SIZE=$(( $PURE_JVM_MEMORY_MB - $JVM_MEM_DIRECT_MEMORY - $JVM_MEM_RESERVED_CODE_CACHE - $JVM_MEM_METASPACE_SIZE - $TOTAL_STACK_SIZE_MB ))
-        echo "Available Heap Size computed to be $JVM_MEM_HEAP_SIZE"
+    if [ -z "$JVM_MEM_HEAP_SIZE_MIB" ]; then
+        PURE_JVM_MEMORY_MIB=$( fp_calc_to_int "$CGROUPS_MEM_LIMIT_MIB * (1 - ($JVM_MEM_OVERHEAD_PERCENT / 100))" )
+        TOTAL_STACK_SIZE_MIB=$(( $JVM_MEM_STACK_SIZE_KIB * JVM_MEM_THREAD_COUNT / 1024 ))
+        JVM_MEM_HEAP_SIZE_MIB=$(( $PURE_JVM_MEMORY_MIB - $JVM_MEM_DIRECT_MEMORY_MIB - $JVM_MEM_RESERVED_CODE_CACHE_MIB - $JVM_MEM_METASPACE_SIZE_MIB - $TOTAL_STACK_SIZE_MIB ))
+        echo "Available Heap Size computed to be $JVM_MEM_HEAP_SIZE_MIB MiB (from pure JVM memory = $PURE_JVM_MEMORY_MIB MiB and total stack size = $TOTAL_STACK_SIZE_MIB MiB)"
     fi
 
-    if [ "$JVM_MEM_HEAP_SIZE" -lt "32" ]; then
+    if [ "$JVM_MEM_HEAP_SIZE_MIB" -lt "32" ]; then
         echo "PANIC: We're trying to start with less than 32 MiB heap, defaulting back to that. Check your input parameters."
-        JVM_MEM_HEAP_SIZE=32
+        JVM_MEM_HEAP_SIZE_MIB=32
     fi
 
-    CALCULATED_OPTS="-Xmx${JVM_MEM_HEAP_SIZE}m \
--XX:MaxMetaspaceSize=${JVM_MEM_METASPACE_SIZE}m \
--Xss${JVM_MEM_STACK_SIZE}k \
--XX:ReservedCodeCacheSize=${JVM_MEM_RESERVED_CODE_CACHE}m \
--XX:MaxDirectMemorySize=${JVM_MEM_DIRECT_MEMORY}m"
+    CALCULATED_OPTS="-Xmx${JVM_MEM_HEAP_SIZE_MIB}m \
+-XX:MaxMetaspaceSize=${JVM_MEM_METASPACE_SIZE_MIB}m \
+-Xss${JVM_MEM_STACK_SIZE_KIB}k \
+-XX:ReservedCodeCacheSize=${JVM_MEM_RESERVED_CODE_CACHE_MIB}m \
+-XX:MaxDirectMemorySize=${JVM_MEM_DIRECT_MEMORY_MIB}m"
 fi
 OPTS="$CALCULATED_OPTS \
 -XX:+ExitOnOutOfMemoryError \
