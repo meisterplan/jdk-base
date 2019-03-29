@@ -5,13 +5,15 @@ These images provide a preconfigured base image to run JVM application with Dock
 This repository supersedes the earlier [docker-openjdk-springboot Image](https://github.com/meisterplan/docker-openjdk-springboot).
 
 ## Available images
- 
+
 We have currently pre-built images for AdoptOpenJDK in version 8 and 11 as well as OpenJDK 11.
 
-* [`meisterplan/jdk-base:8`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
-* [`meisterplan/jdk-base:11`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
-* [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
-* [`meisterplan/jdk-base:11-openjdk`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)
+| Image                                                                                    | JDK version | JDK variant  | Base OS            |
+| ---------------------------------------------------------------------------------------- | ----------- | ------------ | ------------------ |
+| [`meisterplan/jdk-base:8`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)          | 1.8         | AdoptOpenJDK | Ubuntu 18.04       |
+| [`meisterplan/jdk-base:11`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)         | 11          | AdoptOpenJDK | Ubuntu 18.04       |
+| [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)  | 11          | AdoptOpenJDK | Alpine 3.9         |
+| [`meisterplan/jdk-base:11-openjdk`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | OpenJDK      | Debian 9 (Stretch) |
 
 ## Using the image
 
@@ -65,7 +67,7 @@ The container can automatically compute typical required JVM memory limits from 
 
 #### Automatic computation
 
-If your application is already running somewhere and you can estimate your required heap memory (in MB), number of running threads and number of classes loaded, you can compute your total container max memory (in MB) by: 
+If your application is already running somewhere and you can estimate your required heap memory (in MB), number of running threads and number of classes loaded, you can compute your total container max memory (in MB) by:
 
 `Total Container Memory = ( 264 + Heap + #Threads + 0.00553131103 * #Classes ) / 0.85`
 
