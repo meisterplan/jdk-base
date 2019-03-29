@@ -19,18 +19,18 @@ ENV JMX_CONFIG="-Dcom.sun.management.jmxremote=true \
 ENV JVM_OPTS ""
 
 # Put these in for automated calculation, these are just minimal defaults
-ENV JVM_MEM_THREAD_COUNT			45
-ENV JVM_MEM_LOADED_CLASSES_COUNT	12000
+ENV JVM_MEM_THREAD_COUNT            45
+ENV JVM_MEM_LOADED_CLASSES_COUNT    12000
 
 # All of these can be overridden
-ENV JVM_MEM_OVERHEAD_PERCENT		15
-ENV JVM_MEM_DIRECT_MEMORY_MIB		10
-ENV JVM_MEM_RESERVED_CODE_CACHE_MIB	240
-ENV JVM_MEM_STACK_SIZE_KIB			1024
+ENV JVM_MEM_OVERHEAD_PERCENT        15
+ENV JVM_MEM_DIRECT_MEMORY_MIB       10
+ENV JVM_MEM_RESERVED_CODE_CACHE_MIB 240
+ENV JVM_MEM_STACK_SIZE_KIB          1024
 # computed by default
-ENV JVM_MEM_METASPACE_SIZE_MIB		""
+ENV JVM_MEM_METASPACE_SIZE_MIB      ""
 # computed by default
-ENV JVM_MEM_HEAP_SIZE_MIB			""
+ENV JVM_MEM_HEAP_SIZE_MIB           ""
 
 RUN apk add --no-cache su-exec curl
 ENV SU_BINARY su-exec
@@ -47,7 +47,7 @@ CMD ["./run.sh"]
 
 # Fix for https://github.com/AdoptOpenJDK/openjdk-docker/issues/111
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
-	wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-2.29-r0.apk && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-2.29-r0.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-bin-2.29-r0.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-i18n-2.29-r0.apk && \
     apk add glibc-bin-2.29-r0.apk glibc-i18n-2.29-r0.apk glibc-2.29-r0.apk

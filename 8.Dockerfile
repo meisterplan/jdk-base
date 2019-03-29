@@ -19,18 +19,18 @@ ENV JMX_CONFIG="-Dcom.sun.management.jmxremote=true \
 ENV JVM_OPTS ""
 
 # Put these in for automated calculation, these are just minimal defaults
-ENV JVM_MEM_THREAD_COUNT			45
-ENV JVM_MEM_LOADED_CLASSES_COUNT	12000
+ENV JVM_MEM_THREAD_COUNT            45
+ENV JVM_MEM_LOADED_CLASSES_COUNT    12000
 
 # All of these can be overridden
-ENV JVM_MEM_OVERHEAD_PERCENT		15
-ENV JVM_MEM_DIRECT_MEMORY_MIB		10
-ENV JVM_MEM_RESERVED_CODE_CACHE_MIB	240
-ENV JVM_MEM_STACK_SIZE_KIB			1024
+ENV JVM_MEM_OVERHEAD_PERCENT        15
+ENV JVM_MEM_DIRECT_MEMORY_MIB       10
+ENV JVM_MEM_RESERVED_CODE_CACHE_MIB 240
+ENV JVM_MEM_STACK_SIZE_KIB          1024
 # computed by default
-ENV JVM_MEM_METASPACE_SIZE_MIB		""
+ENV JVM_MEM_METASPACE_SIZE_MIB      ""
 # computed by default
-ENV JVM_MEM_HEAP_SIZE_MIB			""
+ENV JVM_MEM_HEAP_SIZE_MIB           ""
 
 RUN apt-get update && apt-get install -y wget unzip gosu && apt-get clean
 ENV SU_BINARY gosu
