@@ -8,12 +8,10 @@ This repository supersedes the earlier [docker-openjdk-springboot Image](https:/
 
 We have currently pre-built images for AdoptOpenJDK in version 8 and 11 as well as OpenJDK 11.
 
-| Image                                                                                    | JDK version | JDK variant  | Base OS            |
-| ---------------------------------------------------------------------------------------- | ----------- | ------------ | ------------------ |
-| [`meisterplan/jdk-base:8`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)          | 1.8         | AdoptOpenJDK | Ubuntu 18.04       |
-| [`meisterplan/jdk-base:11`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)         | 11          | AdoptOpenJDK | Ubuntu 18.04       |
-| [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)  | 11          | AdoptOpenJDK | Alpine 3.9         |
-| [`meisterplan/jdk-base:11-openjdk`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | OpenJDK      | Debian 9 (Stretch) |
+| Image                                                                                            | JDK version | JDK variant     | Base OS     |
+| ------------------------------------------------------------------------------------------------ | ----------- | --------------- | ----------- |
+| [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)          | 11          | AdoptOpenJDK    | Alpine 3.12 |
+| [`meisterplan/jdk-base:corretto-11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | Amazon Corretto | Alpine 3.12 |
 
 ## Using the image
 
@@ -72,6 +70,7 @@ If your application is already running somewhere and you can estimate your requi
 `Total Container Memory = ( 264 + Heap + #Threads + 0.00553131103 * #Classes ) / 0.85`
 
 and then set:
+
 ```
 ENV JVM_MEM_THREAD_COUNT "#Threads"
 ENV JVM_MEM_LOADED_CLASSES_COUNT "#Classes"
@@ -82,7 +81,7 @@ The container then works this out as follows:
 - The total memory of the container is multiplied by `1 - (JVM_MEM_OVERHEAD_PERCENT / 100)` to leave space for native memory headroom
 - Direct Memory is set to 10M
 - Reserved Code Cache is set to 240M
-- Metaspace is set to the heuristic (5,800 * #Classes + 14,000,000) bytes
+- Metaspace is set to the heuristic (5,800 \* #Classes + 14,000,000) bytes
 - Compressed Class Space is not set since it is already limited by metaspace
 - Stack size is set to 1M (which counts per Thread)
 - The remaining memory is used for the heap (`Xmx`)
@@ -91,9 +90,9 @@ If you have no idea at all, the provided defaults `JVM_MEM_THREAD_COUNT = 45` an
 
 #### Manual overrides
 
-- `JVM_MEM_OVERHEAD_PERCENT` *default 15*: Percent between 1 and 99, how much space (percentage) should be reserved for native memory
-- `JVM_MEM_DIRECT_MEMORY` *default 10*: How many MB should be used for `-XX:MaxDirectMemorySize`
-- `JVM_MEM_RESERVED_CODE_CACHE` *default 240*: How many MB should be used for `-XX:ReservedCodeCacheSize`
-- `JVM_MEM_STACK_SIZE` *default 1024*: How many KB should be used for `-Xss`
-- `JVM_MEM_METASPACE_SIZE` *default computed by JVM_LOADED_CLASSES_COUNT*: How much should be used for `-XX:MaxMetaspaceSize`
-- `JVM_MEM_HEAP_SIZE` *default computed by all other input parameters*: How much should be used for `-Xmx`
+- `JVM_MEM_OVERHEAD_PERCENT` _default 15_: Percent between 1 and 99, how much space (percentage) should be reserved for native memory
+- `JVM_MEM_DIRECT_MEMORY` _default 10_: How many MB should be used for `-XX:MaxDirectMemorySize`
+- `JVM_MEM_RESERVED_CODE_CACHE` _default 240_: How many MB should be used for `-XX:ReservedCodeCacheSize`
+- `JVM_MEM_STACK_SIZE` _default 1024_: How many KB should be used for `-Xss`
+- `JVM_MEM_METASPACE_SIZE` _default computed by JVM_LOADED_CLASSES_COUNT_: How much should be used for `-XX:MaxMetaspaceSize`
+- `JVM_MEM_HEAP_SIZE` _default computed by all other input parameters_: How much should be used for `-Xmx`
