@@ -10,7 +10,7 @@ We have currently pre-built images for AdoptOpenJDK in version 8 and 11 as well 
 
 | Image                                                                                            | JDK version | JDK variant     | Base OS     |
 | ------------------------------------------------------------------------------------------------ | ----------- | --------------- | ----------- |
-| [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)          | 11          | AdoptOpenJDK    | Alpine 3.12 |
+| [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)          | 11          | AdoptOpenJDK    | Alpine 3.13 |
 | [`meisterplan/jdk-base:corretto-11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | Amazon Corretto | Alpine 3.12 |
 
 ## Using the image
