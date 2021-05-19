@@ -6,12 +6,12 @@ This repository supersedes the earlier [docker-openjdk-springboot Image](https:/
 
 ## Available images
 
-We have currently pre-built images for AdoptOpenJDK in version 8 and 11 as well as OpenJDK 11.
+We have currently pre-built images for AdoptOpenJDK 11 for Alpine and Ubuntu (when glibc compatibility is needed).
 
-| Image                                                                                            | JDK version | JDK variant     | Base OS     |
-| ------------------------------------------------------------------------------------------------ | ----------- | --------------- | ----------- |
-| [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)          | 11          | AdoptOpenJDK    | Alpine 3.12 |
-| [`meisterplan/jdk-base:corretto-11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | Amazon Corretto | Alpine 3.12 |
+| Image                                                                                   | JDK version | JDK variant  | Base OS          |
+| --------------------------------------------------------------------------------------- | ----------- | ------------ | ---------------- |
+| [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | AdoptOpenJDK | Alpine 3.12      |
+| [`meisterplan/jdk-base:11-ubuntu`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | AdoptOpenJDK | Ubuntu 20.04 LTS |
 
 ## Using the image
 
