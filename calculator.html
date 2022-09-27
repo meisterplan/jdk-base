@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>meisterplan/jdk-base Memory Calculator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<style>
+    body {
+        font-family: sans-serif, "Roboto";
+    }
+
+    ul li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    ul > li > label {
+        flex: 1 0 120px;
+        max-width: 180px;
+    }
+</style>
+<body>
+
+<h2>Memory Calculator</h2>
+<div style="width:600px;">
+    <p>Enter any values, either <em>Heap</em> or <em>Container Memory</em> is computed, if possible.</p>
+    <form>
+        <ul>
+            <li>
+                <label for="heap">Heap:</label>
+                <input type="number" id="heap"/>&nbsp;MiB
+            </li>
+
+            <li>
+                <label for="classes">Class Count:</label>
+                <input type="number" id="classes"/>&nbsp;Classes
+            </li>
+
+            <li>
+                <label for="threads">Thread Count:</label>
+                <input type="number" id="threads"/>&nbsp;Threads
+            </li>
+
+            <li style="border-top:1px solid black; margin: 1em 0"></li>
+
+            <li>
+                <label for="containermem">Container Memory:</label>
+                <input type="number" id="containermem"/>&nbsp;MiB
+            </li>
+        </ul>
+    </form>
+    <script>
+        const calculate = (changed) => {
+            const heap = $("#heap");
+            const classes = $("#classes");
+            const threads = $("#threads");
+            const containerMem = $("#containermem");
+
+            const computeHeap = () => Math.round(Number(containerMem.val()) * 0.85 - (264 + Number(threads.val()) + 0.00553131103 * Number(classes.val())));
+            const computeContainerMem = () => Math.round((264 + Number(heap.val()) + Number(threads.val()) + 0.00553131103 * Number(classes.val())) / 0.85);
+
+            if (changed.is(heap)) {
+                if (classes.val() && threads.val()) {
+                    containerMem.val(computeContainerMem());
+                }
+            } else if (changed.is(classes)) {
+                if (heap.val()) {
+                    containerMem.val(computeContainerMem());
+                } else if (classes.val() && threads.val()) {
+                    heap.val(computeHeap());
+                }
+            } else if (changed.is(threads)) {
+                if (heap.val()) {
+                    containerMem.val(computeContainerMem());
+                } else if (classes.val() && threads.val()) {
+                    heap.val(computeHeap());
+                }
+            } else if (changed.is(containerMem)) {
+                if (classes.val() && threads.val()) {
+                    heap.val(computeHeap());
+                }
+            }
+        }
+
+        $("#heap").keyup(function () {
+            calculate($(this))
+        }).change(function () {
+            calculate($(this))
+        });
+        $("#classes").keyup(function () {
+            calculate($(this))
+        }).change(function () {
+            calculate($(this))
+        });
+        $("#threads").keyup(function () {
+            calculate($(this))
+        }).change(function () {
+            calculate($(this))
+        });
+        $("#containermem").keyup(function () {
+            calculate($(this))
+        }).change(function () {
+            calculate($(this))
+        });
+    </script>
+</div>
+
+</body>
+</html>
