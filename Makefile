@@ -4,5 +4,8 @@ build:
 build-11-alpine:
 	docker build -t meisterplan/jdk-base:11-alpine -f 11-alpine.Dockerfile .
 
+build-17-alpine:
+	docker build -t meisterplan/jdk-base:17-alpine -f 17-alpine.Dockerfile .
+
 build-11-ubuntu:
 	docker build -t meisterplan/jdk-base:11-ubuntu -f 11-ubuntu.Dockerfile .
