@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine
+FROM eclipse-temurin:11-alpine
 
 EXPOSE 8080 8081 5005
 
