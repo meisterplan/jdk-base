@@ -1,7 +1,7 @@
-FROM alpine:3.16
+FROM eclipse-temurin:17-jdk-alpine
 
 # Required packages
-RUN apk add --no-cache su-exec curl openjdk17
+RUN apk add --no-cache su-exec curl
 
 # OS defaults configuration
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
