@@ -1,5 +1,10 @@
 FROM eclipse-temurin:11-alpine
 
+RUN apk add --no-cache su-exec curl
+
+# OS defaults configuration
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
 EXPOSE 8080 8081 5005
 
 ENV SERVICE_JAR            /service.jar
@@ -32,7 +37,6 @@ ENV JVM_MEM_METASPACE_SIZE_MIB      ""
 # computed by default
 ENV JVM_MEM_HEAP_SIZE_MIB           ""
 
-RUN apk add --no-cache su-exec curl
 ENV SU_BINARY su-exec
 RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod ugo+x /usr/bin/check
 
@@ -44,12 +48,3 @@ ENV READINESS_CHECK "curl -m 1 -sf localhost:8081/actuator/health"
 ADD "run.sh" "/run.sh"
 
 CMD ["./run.sh"]
-
-# Fix for https://github.com/AdoptOpenJDK/openjdk-docker/issues/111
-RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-2.29-r0.apk && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-bin-2.29-r0.apk && \
-    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.29-r0/glibc-i18n-2.29-r0.apk && \
-    apk add glibc-bin-2.29-r0.apk glibc-i18n-2.29-r0.apk glibc-2.29-r0.apk
-RUN /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8
-ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
