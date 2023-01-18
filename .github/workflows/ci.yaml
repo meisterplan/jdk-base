@@ -52,7 +52,7 @@ jobs:
     steps:
      - uses: actions/checkout@v3
        with:
-          branch: gha-keep-alive
+          ref: gha-keep-alive
      - uses: gautamkrishnar/keepalive-workflow@790c7f09285a59b09bb578c85e271c6ff2af97c4 # v1.1.0
        with:
         time_elapsed: 30
