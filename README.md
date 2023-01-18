@@ -6,13 +6,14 @@ This repository supersedes the earlier [docker-openjdk-springboot Image](https:/
 
 ## Available images
 
-We have currently pre-built images for AdoptOpenJDK 11 for Alpine and Ubuntu (when glibc compatibility is needed).
+We have currently pre-built images for JDK 11 and 17 for Alpine. ARM support is not production ready.
 
-| Image                                                                                   | JDK version | JDK variant     | Base OS          |
-| --------------------------------------------------------------------------------------- | ----------- | --------------- | ---------------- |
-| [`meisterplan/jdk-base:11-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | Eclipse Temurin | Alpine 3.14      |
-| [`meisterplan/jdk-base:11-ubuntu`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | AdoptOpenJDK    | Ubuntu 20.04 LTS |
-| [`meisterplan/jdk-base:17-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 17          | Eclipse Temurin | Alpine 3.16      |
+| Image                                                                                           | JDK version | JDK variant     | Base OS          | Status                  |
+| ----------------------------------------------------------------------------------------------- | ----------- | --------------- | ---------------- | ----------------------- |
+| [`meisterplan/jdk-base:11-alpine (amd64)`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | Eclipse Temurin | Alpine 3.14      | Supported               |
+| [`meisterplan/jdk-base:11-alpine (arm64)`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 11          | OpenJDK         | Alpine 3.16      | _No-Production Support_ |
+| [`meisterplan/jdk-base:17-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)         | 17          | Eclipse Temurin | Alpine 3.16      | Supported               |
+| [`meisterplan/jdk-base:11-ubuntu`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)         | 11          | AdoptOpenJDK    | Ubuntu 20.04 LTS | **Unsupported**         |
 
 ## Using the image
 

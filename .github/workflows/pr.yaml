@@ -1,0 +1,16 @@
+name: pr
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [11-alpine, 17-alpine]
+    steps:
+     - uses: actions/checkout@v3
+     - run: make build-${{ matrix.image }}
