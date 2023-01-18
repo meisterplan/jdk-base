@@ -1,16 +1,37 @@
-name: CI
+name: pr
 
 on:
-  pull_request:
+  push:
     branches: [master]
+  schedule:
+    - cron: "5 5 * * *"
+  workflow_dispatch: {}
+
+concurrency: master
 
 jobs:
-  docker:
+  publish:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        image: [11-alpine, 11-ubuntu, 17-alpine]
+        image: [11-alpine, 17-alpine]
     steps:
      - uses: actions/checkout@v3
-     - run: make build-${{ matrix.image }}
+     - uses: docker/login-action@v2
+       with:
+         username: ${{ secrets.DOCKERHUB_USERNAME }}
+         password: ${{ secrets.DOCKERHUB_TOKEN }}
+     - run: make publish-${{ matrix.image }}
+
+  ensure-schedule-does-not-expire:
+    runs-on: ubuntu-latest
+    # See: https://stackoverflow.com/questions/67184368/prevent-scheduled-github-actions-from-becoming-disabled
+    # See: https://github.com/marketplace/actions/keepalive-workflow
+    steps:
+     - uses: actions/checkout@v3
+       with:
+          branch: gha-keep-alive
+     - uses: gautamkrishnar/keepalive-workflow@790c7f09285a59b09bb578c85e271c6ff2af97c4 # v1.1.0
+       with:
+        time_elapsed: 30

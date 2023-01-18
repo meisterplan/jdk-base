@@ -1,4 +1,5 @@
-FROM eclipse-temurin:11-alpine
+ARG image
+FROM ${image}
 
 RUN apk add --no-cache su-exec curl
 
@@ -38,7 +39,7 @@ ENV JVM_MEM_METASPACE_SIZE_MIB      ""
 ENV JVM_MEM_HEAP_SIZE_MIB           ""
 
 ENV SU_BINARY su-exec
-RUN wget https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check -O /usr/bin/check && chmod ugo+x /usr/bin/check
+RUN curl -Lo /usr/bin/check https://github.com/meisterplan/k8s-health-check/releases/download/v0.1/check && chmod ugo+x /usr/bin/check
 
 RUN addgroup -S jdkservice -g 202 && adduser -S -u 202 jdkservice jdkservice
 
