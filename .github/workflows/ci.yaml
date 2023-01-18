@@ -10,12 +10,16 @@ on:
 concurrency: master
 
 jobs:
-  publish:
+  publish-images:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        image: [11-alpine, 17-alpine]
+        image:
+         - 11-alpine-amd64
+         - 11-alpine-arm64
+         - 17-alpine-amd64
+         - 17-alpine-arm64
     steps:
      - uses: actions/checkout@v3
      - uses: docker/login-action@v2
@@ -23,6 +27,23 @@ jobs:
          username: ${{ secrets.DOCKERHUB_USERNAME }}
          password: ${{ secrets.DOCKERHUB_TOKEN }}
      - run: make publish-${{ matrix.image }}
+
+  publish-manifests:
+    needs: [publish-images]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+         - 11-alpine
+         - 17-alpine
+    steps:
+     - uses: actions/checkout@v3
+     - uses: docker/login-action@v2
+       with:
+         username: ${{ secrets.DOCKERHUB_USERNAME }}
+         password: ${{ secrets.DOCKERHUB_TOKEN }}
+     - run: make publish-${{ matrix.image }}-manifest
 
   ensure-schedule-does-not-expire:
     runs-on: ubuntu-latest

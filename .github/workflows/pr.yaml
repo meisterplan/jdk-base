@@ -10,7 +10,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: [11-alpine, 17-alpine]
+        image:
+         - 11-alpine-amd64
+         - 11-alpine-arm64
+         - 17-alpine-amd64
+         - 17-alpine-arm64
     steps:
      - uses: actions/checkout@v3
      - run: make build-${{ matrix.image }}
