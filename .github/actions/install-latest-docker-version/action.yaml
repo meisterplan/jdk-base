@@ -1,0 +1,15 @@
+name: Install latest Docker version
+description: This composite action does install the latest available Docker version for Ubuntu.
+inputs: {}
+outputs: {}
+runs:
+  using: "composite"
+  steps:
+    - run: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+      shell: bash
+    - run: sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+      shell: bash
+    - run: sudo apt-get update
+      shell: bash
+    - run: sudo apt-get install docker-ce
+      shell: bash
