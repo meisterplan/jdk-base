@@ -25,7 +25,9 @@ publish-11-alpine-arm64: setup-docker-buildx
 
 build-11-alpine-manifest:
 	docker manifest rm meisterplan/jdk-base:11-alpine || true
-	docker manifest create meisterplan/jdk-base:11-alpine meisterplan/jdk-base:11-alpine-amd64 meisterplan/jdk-base:11-alpine-arm64
+	$(eval AMD_64_DIGEST:=$(shell docker manifest inspect -v meisterplan/jdk-base:11-alpine-amd64 | jq -r '.Descriptor.digest'))
+	$(eval ARM_64_DIGEST:=$(shell docker manifest inspect meisterplan/jdk-base:11-alpine-arm64 | jq -r '.manifests[] | select(.platform.architecture == "arm64") | .digest'))
+	docker manifest create meisterplan/jdk-base:11-alpine meisterplan/jdk-base@$(AMD_64_DIGEST) meisterplan/jdk-base@$(ARM_64_DIGEST)
 
 publish-11-alpine-manifest: build-11-alpine-manifest
 	docker manifest push meisterplan/jdk-base:11-alpine
@@ -49,7 +51,9 @@ publish-17-alpine-arm64: setup-docker-buildx
 
 build-17-alpine-manifest:
 	docker manifest rm meisterplan/jdk-base:17-alpine || true
-	docker manifest create meisterplan/jdk-base:17-alpine meisterplan/jdk-base:17-alpine-amd64 meisterplan/jdk-base:17-alpine-arm64
+	$(eval AMD_64_DIGEST:=$(shell docker manifest inspect -v meisterplan/jdk-base:17-alpine-amd64 | jq -r '.Descriptor.digest'))
+	$(eval ARM_64_DIGEST:=$(shell docker manifest inspect meisterplan/jdk-base:17-alpine-arm64 | jq -r '.manifests[] | select(.platform.architecture == "arm64") | .digest'))
+	docker manifest create meisterplan/jdk-base:17-alpine meisterplan/jdk-base@$(AMD_64_DIGEST) meisterplan/jdk-base@$(ARM_64_DIGEST)
 
 publish-17-alpine-manifest: build-17-alpine-manifest
 	docker manifest push meisterplan/jdk-base:17-alpine
