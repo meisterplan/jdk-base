@@ -17,4 +17,6 @@ jobs:
          - 17-alpine-arm64
     steps:
      - uses: actions/checkout@v3
+     - name: Install latest docker-ce version
+       uses: ./.github/actions/install-latest-docker-version
      - run: make build-${{ matrix.image }}
