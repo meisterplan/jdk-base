@@ -1,0 +1,23 @@
+name: Notify on Failure
+run-name: Notify Failure of "${{ github.event.workflow.name }}" (${{ github.event.workflow_run.id }})
+
+on:
+  workflow_run:
+    workflows: [ "**" ]
+    types:
+      - completed
+      - requested
+
+jobs:
+  notify-on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.status == 'completed' && contains(fromJSON('["action_required", "failure", "stale", "timed_out"]'), github.event.workflow_run.conclusion) && github.event.workflow_run.event != 'pull_request' && (github.event.workflow.name != 'chromatic' || github.event.workflow_run.head_branch == 'master') }}
+    steps:
+      - name: notify team
+        uses: meisterplan/actions-msteams@v3
+        with:
+          color: "#9F3B3C"
+          body: |
+            **Failed** GitHub Actions workflow **${{ github.event.workflow.name }}** failed in **${{ github.repository }}**.
+            See [build logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}).
+          webhook: ${{ secrets.MS_TEAMS_WEBHOOK_URL }}
