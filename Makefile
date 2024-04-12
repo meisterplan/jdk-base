@@ -46,7 +46,7 @@ publish-21-alpine-amd64: build-21-alpine-amd64
 build-21-alpine-arm64: docker-buildx-setup-21
 	docker buildx build --platform=linux/arm64 --load --pull --build-arg image=arm64v8/eclipse-temurin:21-alpine -t meisterplan/jdk-base:21-alpine-arm64 -f alpine.Dockerfile .
 
-publish-21-alpine-arm64: docker-buildx-setup-21
+publish-21-alpine-arm64: build-21-alpine-arm64
 	docker push meisterplan/jdk-base:21-alpine-arm64
 
 
