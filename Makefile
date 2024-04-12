@@ -53,7 +53,7 @@ publish-21-alpine-arm64: build-21-alpine-arm64
 build-21-alpine-manifest:
 	docker manifest rm meisterplan/jdk-base:21-alpine || true
 	$(eval AMD_64_DIGEST:=$(shell docker manifest inspect -v meisterplan/jdk-base:21-alpine-amd64 | jq -r '.Descriptor.digest'))
-	$(eval ARM_64_DIGEST:=$(shell docker manifest inspect meisterplan/jdk-base:21-alpine-arm64 | jq -r '.manifests[] | select(.platform.architecture == "arm64") | .digest'))
+	$(eval ARM_64_DIGEST:=$(shell docker manifest inspect -v meisterplan/jdk-base:21-alpine-arm64 | jq -r '.Descriptor.digest'))
 	docker manifest create meisterplan/jdk-base:21-alpine meisterplan/jdk-base@$(AMD_64_DIGEST) meisterplan/jdk-base@$(ARM_64_DIGEST)
 
 publish-21-alpine-manifest: build-21-alpine-manifest
