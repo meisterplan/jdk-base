@@ -16,8 +16,8 @@ jobs:
       fail-fast: false
       matrix:
         image:
-         - 11-alpine-amd64
-         - 11-alpine-arm64
+         - 21-alpine-amd64
+         - 21-alpine-arm64
          - 17-alpine-amd64
          - 17-alpine-arm64
     steps:
@@ -37,7 +37,7 @@ jobs:
       fail-fast: false
       matrix:
         image:
-         - 11-alpine
+         - 21-alpine
          - 17-alpine
     steps:
      - uses: actions/checkout@v3
