@@ -8,12 +8,10 @@ fp_calc_to_int() {
     fp_calc "$*" | xargs printf %.0f
 }
 
-CGROUPS_MEM_LIMIT_BYTES=$(cat /sys/fs/cgroup/memory/memory.limit_in_bytes)
+CGROUPS_MEM_LIMIT_BYTES=$(cat /sys/fs/cgroup/memory.max /sys/fs/cgroup/memory/memory.limit_in_bytes 2>/dev/null)
 
 if [ "$CGROUPS_MEM_LIMIT_BYTES" = "9223372036854771712" ] || [ "X${CGROUPS_MEM_LIMIT_BYTES}X" = "XX" ]; then
     echo "There is no cgroups memory limit in place, falling back to default behavior (not setting any limit)."
-    JAVA_XMX=""
-
     CALCULATED_OPTS=""
 else
     CGROUPS_MEM_LIMIT_MIB=$(( $CGROUPS_MEM_LIMIT_BYTES / 1048576 ))
