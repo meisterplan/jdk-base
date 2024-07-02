@@ -10,7 +10,7 @@ fp_calc_to_int() {
 
 CGROUPS_MEM_LIMIT_BYTES=$(cat /sys/fs/cgroup/memory.max /sys/fs/cgroup/memory/memory.limit_in_bytes 2>/dev/null)
 
-if [ "$CGROUPS_MEM_LIMIT_BYTES" = "9223372036854771712" ] || [ "X${CGROUPS_MEM_LIMIT_BYTES}X" = "XX" ]; then
+if [ "$CGROUPS_MEM_LIMIT_BYTES" = "9223372036854771712" ] || [ "X${CGROUPS_MEM_LIMIT_BYTES}X" = "XX" ] || [ "${CGROUPS_MEM_LIMIT_BYTES}" = "max" ]; then
     echo "There is no cgroups memory limit in place, falling back to default behavior (not setting any limit)."
     CALCULATED_OPTS=""
 else
