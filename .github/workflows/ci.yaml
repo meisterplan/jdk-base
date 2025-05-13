@@ -2,10 +2,10 @@ name: ci
 
 on:
   push:
-    branches: [master]
+    branches: [ master ]
   schedule:
     - cron: "5 5 * * *"
-  workflow_dispatch: {}
+  workflow_dispatch: { }
 
 concurrency: master
 
@@ -16,47 +16,44 @@ jobs:
       fail-fast: false
       matrix:
         image:
-         - 21-alpine-amd64
-         - 21-alpine-arm64
-         - 17-alpine-amd64
-         - 17-alpine-arm64
+          - 21-alpine-amd64
+          - 21-alpine-arm64
     steps:
-     - uses: actions/checkout@v3
-     - name: Install latest docker-ce version
-       uses: ./.github/actions/install-latest-docker-version
-     - uses: docker/login-action@v3
-       with:
-         username: meisterplanbuildserver
-         password: ${{ secrets.DOCKER_HUB_API_KEY }}
-     - run: make publish-${{ matrix.image }}
+      - uses: actions/checkout@v3
+      - name: Install latest docker-ce version
+        uses: ./.github/actions/install-latest-docker-version
+      - uses: docker/login-action@v3
+        with:
+          username: meisterplanbuildserver
+          password: ${{ secrets.DOCKER_HUB_API_KEY }}
+      - run: make publish-${{ matrix.image }}
 
   publish-manifests:
-    needs: [publish-images]
+    needs: [ publish-images ]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         image:
-         - 21-alpine
-         - 17-alpine
+          - 21-alpine
     steps:
-     - uses: actions/checkout@v3
-     - name: Install latest docker-ce version
-       uses: ./.github/actions/install-latest-docker-version
-     - uses: docker/login-action@v3
-       with:
-         username: meisterplanbuildserver
-         password: ${{ secrets.DOCKER_HUB_API_KEY }}
-     - run: make publish-${{ matrix.image }}-manifest
+      - uses: actions/checkout@v3
+      - name: Install latest docker-ce version
+        uses: ./.github/actions/install-latest-docker-version
+      - uses: docker/login-action@v3
+        with:
+          username: meisterplanbuildserver
+          password: ${{ secrets.DOCKER_HUB_API_KEY }}
+      - run: make publish-${{ matrix.image }}-manifest
 
   ensure-schedule-does-not-expire:
     runs-on: ubuntu-latest
     # See: https://stackoverflow.com/questions/67184368/prevent-scheduled-github-actions-from-becoming-disabled
     # See: https://github.com/marketplace/actions/keepalive-workflow
     steps:
-     - uses: actions/checkout@v3
-       with:
+      - uses: actions/checkout@v3
+        with:
           ref: gha-keep-alive
-     - uses: gautamkrishnar/keepalive-workflow@790c7f09285a59b09bb578c85e271c6ff2af97c4 # v1.1.0
-       with:
-        time_elapsed: 30
+      - uses: gautamkrishnar/keepalive-workflow@790c7f09285a59b09bb578c85e271c6ff2af97c4 # v1.1.0
+        with:
+          time_elapsed: 30

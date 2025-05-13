@@ -9,13 +9,11 @@ earlier [docker-openjdk-springboot Image](https://github.com/meisterplan/docker-
 
 ## Available images
 
-We have currently pre-built images for JDK 17 and 21 for Alpine. ARM support is only production-ready with JDK 21.
+We have currently pre-built images for JDK 21 for Alpine. AMD64 and ARM architectures are supported.
 
-| Image                                                                                           | JDK Version | JDK Variant     | Base OS                                                                                                              | Status                  |
-|-------------------------------------------------------------------------------------------------|-------------|-----------------|----------------------------------------------------------------------------------------------------------------------|-------------------------|
-| [`meisterplan/jdk-base:21-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/)         | 21          | Eclipse Temurin | [Alpine from Temurin](https://github.com/adoptium/containers/blob/main/21/jdk/alpine/Dockerfile#L20) (at least 3.19) | Supported               |
-| [`meisterplan/jdk-base:17-alpine (amd64)`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 17          | Eclipse Temurin | [Alpine from Temurin](https://github.com/adoptium/containers/blob/main/17/jdk/alpine/Dockerfile#L20) (at least 3.19) | Supported               |
-| [`meisterplan/jdk-base:17-alpine (arm64)`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 17          | OpenJDK         | Alpine 3.19                                                                                                          | _No-Production Support_ |
+| Image                                                                                   | JDK Version | JDK Variant     | Base OS                                                                               | Status    |
+|-----------------------------------------------------------------------------------------|-------------|-----------------|---------------------------------------------------------------------------------------|-----------|
+| [`meisterplan/jdk-base:21-alpine`](https://hub.docker.com/r/meisterplan/jdk-base/tags/) | 21          | Eclipse Temurin | [Alpine from Temurin](https://github.com/adoptium/containers/tree/main/21/jdk/alpine) | Supported |
 
 ## Using the image
 
